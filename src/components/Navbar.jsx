@@ -3,20 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { DarkModeToggle } from "../components";
 import { useStateContext } from "../context";
 import { CustomButton } from "./";
-import { menu, metamask } from "../assets";
+import { metamask } from "../assets";
 import { navlinks } from "../constants";
 import { logoHorizontal } from "../assets";
 import { AlignJustify } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState("dashboard");
-  const [toggleDrawer, setToggleDrawer] = useState(false);
   const { connect, address } = useStateContext();
 
   return (
-    <div>
-      <div className="flex justify-between items-center fixed z-10 w-full p-[10px] gap-[20px]">
+    <div className="fixed top-0 w-full z-50">
+      <div className="container mx-auto flex justify-between items-center z-10 p-[10px] gap-[20px]">
         <AlignJustify
           size={45}
           color="#262626"
@@ -76,25 +74,27 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li className="flex items-center">
-              <Link
-                to="/"
-                className="text-grey-950 dark:text-grey-200 font-epilogue font-semibold px-4"
-              >
-                <p className="text-nowrap">Dashboard</p>
-              </Link>
-            </li>
+            {address && (
+              <li className="flex items-center">
+                <Link
+                  to="/dashboard"
+                  className="text-grey-950 dark:text-grey-200 font-epilogue font-semibold px-4"
+                >
+                  <p className="text-nowrap">Dashboard</p>
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
 
         <div className="flex flex-row justify-end gap-4">
           <DarkModeToggle></DarkModeToggle>
+
           <CustomButton
             btnType="button"
             title={address ? "Create a campaign" : "Connect"}
-            styles={address ? "bg-[#1dc071]" : "bg-orange-500"}
             handleClick={() => {
-              if (address) navigate("create-campaign");
+              if (address) navigate("/dashboard/create-campaign");
               else connect();
             }}
           />

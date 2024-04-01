@@ -1,7 +1,7 @@
 import React from "react";
 
 import { tagType, metamask } from "../assets";
-import { daysLeft } from "../utils";
+
 import { ethereumCoin } from "../assets";
 const FundCard = ({
   owner,
@@ -13,11 +13,9 @@ const FundCard = ({
   image,
   handleClick,
 }) => {
-  const remainingDays = daysLeft(deadline);
-
   return (
     <div
-      className="rounded-[15px] w-full bg-grey-100 dark:bg-grey-950 cursor-pointer"
+      className="rounded-lg w-full bg-grey-100 dark:bg-grey-900 cursor-pointer shadow-lg"
       onClick={handleClick}
     >
       <img
@@ -28,11 +26,13 @@ const FundCard = ({
 
       <div className="flex flex-col p-4">
         <div className="block">
-          <h3 className="font-epilogue text-2xl lg:text-3xl font-semibold text-grey-950 dark:text-grey-50">
+          <h3 className="font-epilogue text-md lg:text-lg min-h-[54px] font-semibold text-grey-950 dark:text-grey-50 mb-2">
             {title}
           </h3>
-          <p className="font-epilogue text-md lg:text-xl text-grey-950 dark:text-grey-50">
-            {description}
+          <p className="font-epilogue text-sm lg:text-md min-h-[110px] text-grey-950 dark:text-grey-50">
+            {description.length > 250
+              ? description.substring(0, 150) + "..."
+              : description}
           </p>
         </div>
 
@@ -49,14 +49,6 @@ const FundCard = ({
                 className="relative bottom-1 w-[25px] h-[25px] object-contain inline-block"
               ></img>
             </h4>
-          </div>
-          <div className="flex flex-col">
-            <h4 className="font-epilogue font-semibold text-[#b2b3bd]">
-              {remainingDays}
-            </h4>
-            <p className="mt-[3px] font-epilogue font-normal text-[#808191] sm:max-w-[120px] truncate">
-              Days Left
-            </p>
           </div>
         </div>
 

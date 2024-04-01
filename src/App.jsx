@@ -1,14 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { Navbar } from "./components";
-import { Home, Dashboard } from "./pages";
+import { Home, Dashboard, CampaignDetails, CreateCampaign } from "./pages";
 import Campaigns from "./pages/Campaigns";
 
 const App = () => {
   return (
-    <div className="bg-grey-50 dark:bg-grey-800">
-      <Navbar />
+    <div className="bg-grey-50 dark:bg-grey-700">
       <div className="relative sm:-8 min-h-screen flex flex-row">
         <Routes>
           <Route
@@ -19,10 +17,17 @@ const App = () => {
             path="/campaigns"
             element={<Campaigns />}
           />
-
+          <Route
+            path="/campaign-details/:id"
+            element={<CampaignDetails />}
+          />
           <Route
             path="/dashboard"
             element={<Dashboard />}
+          />
+          <Route
+            path="/dashboard/create-campaign"
+            element={<CreateCampaign />}
           />
         </Routes>
       </div>

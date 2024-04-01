@@ -1,33 +1,48 @@
-import React from 'react'
-
-const FormField = ({ labelName, placeholder, inputType, isTextArea, value, handleChange }) => {
+import React from "react";
+import { ErrorMessage } from "../components";
+const FormField = ({
+  labelHeading,
+  placeholder,
+  inputType,
+  isTextArea,
+  value,
+  handleChange,
+  maxChars,
+  errorMessage,
+}) => {
   return (
     <label className="flex-1 w-full flex flex-col">
-      {labelName && (
-        <span className="font-epilogue font-medium text-[14px] leading-[22px] text-[#808191] mb-[10px]">{labelName}</span>
+      {labelHeading && (
+        <span className="font-epilogue font-medium text-[14px] text-grey-950 dark:text-grey-50 mb-[10px]">
+          {labelHeading}
+        </span>
       )}
       {isTextArea ? (
-        <textarea 
+        <textarea
           required
           value={value}
           onChange={handleChange}
-          rows={10}
+          rows={9}
           placeholder={placeholder}
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          maxLength={maxChars}
+          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[2px] border-grey-400 bg-transparent font-epilogue text-grey-950 dark:text-grey-50 text-[14px] placeholder:text-grey-300 rounded-[10px] sm:min-w-[300px]  focus:border-orange-500 focus:ring-orange-500"
         />
       ) : (
-        <input 
+        <input
           required
           value={value}
           onChange={handleChange}
           type={inputType}
           step="0.1"
           placeholder={placeholder}
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          maxLength={maxChars}
+          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[2px] border-grey-400 bg-transparent font-epilogue text-grey-950 dark:text-grey-50 text-[14px] placeholder:text-grey-300 rounded-[10px] sm:min-w-[300px] focus:border-orange-500 focus:ring-orange-500"
         />
       )}
-    </label>
-  )
-}
 
-export default FormField
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+    </label>
+  );
+};
+
+export default FormField;

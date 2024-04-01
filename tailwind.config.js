@@ -1,13 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'selector',
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/preline/dist/*.js',
   ],
   theme: {
     extend: {
       screens: {
+        xs: '480px',
         sm: '640px',
         md: '768px',
         lg: '1024px',
@@ -25,6 +27,14 @@ module.exports = {
         '5xl': '3rem',
         '6xl': '4rem',
       },
+      container: {
+        screens: {
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+        },
+      },
       colors: {
         grey: {
           50: '#f6f6f6',
@@ -37,6 +47,7 @@ module.exports = {
           700: '#4f4f4f',
           800: '#454545',
           900: '#3d3d3d',
+
           950: '#262626',
         },
         indigo: {
@@ -104,5 +115,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('preline/plugin')
+  ],
 }

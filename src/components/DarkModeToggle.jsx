@@ -16,7 +16,7 @@ function DarkModeToggle() {
       className="flex justify-center items-center rounded-md bg-grey-950 p-2 dark:bg-grey-100 focus:outline-none shadow-lg h-[52px] w-[52px]"
     >
       <img
-        className="w-[32px] h-[32px]"
+        className="w-[28px] h-[28px]"
         src={darkMode ? sun : moon}
         alt="Toggle Dark Mode"
       />

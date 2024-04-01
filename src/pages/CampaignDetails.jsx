@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 import { useStateContext } from "../context";
-import { CountBox, CustomButton, Loader } from "../components";
+import { CustomButton, Loader, Footer } from "../components";
 import { calculateBarPercentage, daysLeft } from "../utils";
-import { metamask } from "../assets";
-
+import { ethereumCoin } from "../assets";
+import { Navbar } from "../components";
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { donate, getDonations, contract, address, connect } =
+    useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
@@ -37,152 +38,176 @@ const CampaignDetails = () => {
   };
 
   return (
-    <div>
-      {isLoading && <Loader />}
+    <div className="w-full">
+      <Navbar />
 
-      <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
-        <div className="flex-1 flex-col">
-          <img
-            src={state.image}
-            alt="campaign"
-            className="w-full h-[410px] object-cover rounded-xl"
-          />
-          <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
-            <div
-              className="absolute h-full bg-[#4acd8d]"
-              style={{
-                width: `${calculateBarPercentage(
-                  state.target,
-                  state.amountCollected
-                )}%`,
-                maxWidth: "100%",
-              }}
-            ></div>
-          </div>
-        </div>
+      <div className="container mx-auto">
+        <ol
+          className="relative left-[45px] top-[130px] flex items-center whitespace-nowrap"
+          aria-label="Breadcrumb"
+        >
+          <li className="inline-flex items-center">
+            <Link to="/">
+              <a className="flex items-center text-sm cursor-pointer text-grey-950 dark:text-grey-50 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500">
+                Home
+              </a>
+            </Link>
+            <svg
+              className="flex-shrink-0 mx-2 overflow-visible size-4 text-grey-950 dark:text-grey-50"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </li>
+          <li className="inline-flex items-center">
+            <Link to="/campaigns">
+              <a className="flex items-center text-sm cursor-pointer text-grey-950 dark:text-grey-50 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500">
+                Campaigns
+                <svg
+                  className="flex-shrink-0 mx-2 overflow-visible size-4 text-grey-950 dark:text-grey-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </a>
+            </Link>
+          </li>
+          <li
+            className="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
+            aria-current="page"
+          >
+            Campaign Details
+          </li>
+        </ol>
 
-        <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox
-            title="Days Left"
-            value={remainingDays}
-          />
-          <CountBox
-            title={`Raised of ${state.target}`}
-            value={state.amountCollected}
-          />
-          <CountBox
-            title="Total Backers"
-            value={donators.length}
-          />
-        </div>
-      </div>
+        <div className="flex flex-col pt-40 px-5 pb-5 lg:px-10 lg:pb-10 xl:grid xl:grid-cols-3 xl:gap-7">
+          {isLoading && <Loader />}
 
-      <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
-        <div className="flex-[2] flex flex-col gap-[40px]">
-          <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-              Creator
-            </h4>
+          <header className="bg-grey-100 dark:bg-grey-900 rounded-[10px] relative shadow-lg p-3 md:p-6 xl:col-span-2">
+            <img
+              src={state.image}
+              alt="campaign image"
+              className="rounded-[10px] shadow-lg h-[300px] object-cover lg:h-[400px] w-full"
+            />
 
-            <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-              <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
-                <img
-                  src={metamask}
-                  alt="user"
-                  className="w-[60%] h-[60%] object-contain"
-                />
-              </div>
-              <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">
-                  {state.owner}
-                </h4>
-                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
-                  10 Campaigns
-                </p>
-              </div>
-            </div>
-          </div>
+            <h1 className="font-epilogue font-bold text-[30px] pt-3 md:pt- md:text-[40px] lg:text-[55px] text-grey-950 dark:text-grey-50">
+              {state.title}
+            </h1>
+          </header>
 
-          <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-              Story
-            </h4>
+          <div className="xl:row-span-2">
+            <aside className="bg-grey-100 dark:bg-grey-900 rounded-[10px] mt-5 md:mt-10 p-3 md:p-6 shadow-lg xl:mt-0 xl:sticky xl:top-[110px]">
+              <div className="flex justify-between xl:flex-col xl:gap-5">
+                <div className="flex flex-col order-2 xl:order-none items-center gap-1 w-[33%] xl:w-full xl:items-baseline">
+                  <p className="font-epilogue text-lg md:text-3xl font-semibold text-grey-950 dark:text-grey-50">
+                    {state.amountCollected} / {state.target}
+                    <img
+                      src={ethereumCoin}
+                      alt="ethereum coin"
+                      className="relative bottom-1 w-[25px] h-[25px] object-contain inline-block"
+                    ></img>
+                  </p>
 
-            <div className="mt-[20px]">
-              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
-                {state.description}
-              </p>
-            </div>
-          </div>
+                  <div className=" xl:block relative w-full h-[6px] rounded-[10px] bg-grey-900 dark:bg-grey-100  mb-4">
+                    <div
+                      className="absolute h-full bg-jade-500 rounded-[10px]"
+                      style={{
+                        width: `${calculateBarPercentage(
+                          state.target,
+                          state.amountCollected
+                        )}%`,
+                        maxWidth: "100%",
+                      }}
+                    ></div>
 
-          <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-              Donators
-            </h4>
+                    <div className="flex justify-between relative top-2 text-grey-950 dark:text-grey-50">
+                      <p>
+                        {calculateBarPercentage(
+                          state.target,
+                          state.amountCollected
+                        )}
+                        %
+                      </p>
 
-            <div className="mt-[20px] flex flex-col gap-4">
-              {donators.length > 0 ? (
-                donators.map((item, index) => (
-                  <div
-                    key={`${item.donator}-${index}`}
-                    className="flex justify-between items-center gap-4"
-                  >
-                    <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
-                      {index + 1}. {item.donator}
-                    </p>
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">
-                      {item.donation}
-                    </p>
+                      <p>100%</p>
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
-                  No donators yet. Be the first one!
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+                </div>
 
-        <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-            Fund
-          </h4>
+                <div className="flex flex-col order-2 items-center gap-1 w-[33%] xl:w-full xl:flex-row xl:items-baseline">
+                  <p className="font-epilogue text-lg md:text-3xl font-semibold text-grey-950 dark:text-grey-50">
+                    {donators.length}
+                  </p>
 
-          <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-            <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-              Fund the campaign
-            </p>
-            <div className="mt-[30px]">
-              <input
-                type="number"
-                placeholder="ETH 0.1"
-                step="0.01"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
+                  <p className="font-epilogue text-md md:text-xl text-grey-950 dark:text-grey-50">
+                    {donators.length === 1 ? "Donation" : `Donations`}
+                  </p>
+                </div>
 
-              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
-                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">
-                  Back it because you believe in it.
-                </h4>
-                <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">
-                  Support the project for no reward, just because it speaks to
-                  you.
-                </p>
+                <div className="flex flex-col items-center gap-1 w-[33%] xl:w-full xl:flex-row xl:items-baseline">
+                  <p className="font-epilogue text-lg md:text-3xl font-semibold text-grey-950 dark:text-grey-50">
+                    {remainingDays}
+                  </p>
+
+                  <p className="font-epilogue text-md md:text-xl text-grey-950 dark:text-grey-50">
+                    Days Left
+                  </p>
+                </div>
               </div>
 
-              <CustomButton
-                btnType="button"
-                title="Fund Campaign"
-                styles="w-full bg-[#8c6dfd]"
-                handleClick={handleDonate}
-              />
-            </div>
+              <div className="mt-[20px] flex order-3 flex-col p-4 bg-grey-200 dark:bg-grey-950 rounded-[10px] shadow-lg">
+                <div className="flex gap-3 xl:flex-col">
+                  <input
+                    type="number"
+                    placeholder="0.1 ETH"
+                    step="0.01"
+                    className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[2px] border-grey-900 dark:border-grey-100 bg-transparent font-epilogue text-grey-950 dark:text-grey-50 rounded-[10px]"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+
+                  <CustomButton
+                    btnType="button"
+                    title={address ? "Donate" : "Connect"}
+                    disabled={!amount}
+                    handleClick={() => {
+                      if (address && amount !== "") {
+                        handleDonate();
+                      } else {
+                        if (!address) connect();
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </aside>
           </div>
+
+          <main className="bg-grey-100 dark:bg-grey-900 rounded-[10px] mt-5 md:mt-10 p-3 md:p-6 shadow-lg xl:mt-0 xl:col-span-2">
+            <p className="font-epilogue text-md md:text-xl text-grey-950 dark:text-grey-50">
+              {state.description}
+            </p>
+          </main>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

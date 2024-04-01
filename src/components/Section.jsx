@@ -8,7 +8,7 @@ const Section = ({
   btnType,
   btnStyles,
   imageUrl,
-  bgColor,
+  styles,
   flexDirection,
   btnUrl,
 }) => {
@@ -19,9 +19,9 @@ const Section = ({
   };
 
   return (
-    <div className={`${bgColor}`}>
+    <div className={`${styles}`}>
       <section
-        className={`max-w-[500px] m-auto flex flex-col-reverse justify-between items-center p-10 gap-10 ${flexDirection} lg:max-w-[1250px] lg:p-20`}
+        className={`max-w-[500px] m-auto flex flex-col-reverse justify-between items-center p-5 gap-5 ${flexDirection} lg:p-10 md:container`}
       >
         <div>
           <h2 className="text-grey-950 text-3xl lg:text-5xl font-epilogue font-bold dark:text-grey-50">
@@ -43,7 +43,7 @@ const Section = ({
         <img
           src={imageUrl}
           alt="ethereum donation illustration"
-          className="h-auto w-[500px] rounded-lg shadow-2xl"
+          className="h-auto w-[400px] rounded-lg shadow-2xl xl:w-[500px]"
         />
       </section>
     </div>

@@ -2,9 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import FundCard from "./FundCard";
-import { loader } from "../assets";
-
-const DisplayCampaigns = ({ title, isLoading, campaigns, bgColor }) => {
+const DisplayCampaigns = ({ isLoading, campaigns, styles }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (campaign) => {
@@ -12,23 +10,21 @@ const DisplayCampaigns = ({ title, isLoading, campaigns, bgColor }) => {
   };
 
   return (
-    <div className={`${bgColor}`}>
-      <div className="max-w-[500px] m-auto lg:max-w-[1250px] px-10 pb-10 lg:px-20 lg:pb-20">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {isLoading && (
-            <img
-              src={loader}
-              alt="loader"
-              className="w-[100px] h-[100px] object-contain"
-            />
-          )}
+    <div className={`${styles}`}>
+      {isLoading && (
+        <div className="flex justify-center items-center w-full">
+          <div
+            class="animate-spin inline-block size-10 border-[5px] border-current border-t-transparent text-orange-500 rounded-full"
+            role="status"
+            aria-label="loading"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      )}
 
-          {!isLoading && campaigns.length === 0 && (
-            <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
-              You have not created any campaigns yet
-            </p>
-          )}
-
+      <div className="container m-auto">
+        <div className="grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {!isLoading &&
             campaigns.length > 0 &&
             campaigns.map((campaign) => (
