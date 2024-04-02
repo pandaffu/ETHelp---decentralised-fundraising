@@ -38,7 +38,7 @@ const CampaignDetails = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-[350px]">
       <Navbar />
 
       <div className="container mx-auto">

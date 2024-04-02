@@ -30,7 +30,7 @@ const Campaigns = () => {
   );
 
   return (
-    <div className="w-full pt-[90px]">
+    <div className="w-full pt-[90px] pb-[350px]">
       <Navbar />
 
       <div className="container mx-auto">
