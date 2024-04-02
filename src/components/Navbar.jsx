@@ -1,30 +1,49 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { DarkModeToggle } from "../components";
+import { DarkModeToggle, MobileNavbar } from "../components";
 import { useStateContext } from "../context";
 import { CustomButton } from "./";
 import { metamask } from "../assets";
-import { navlinks } from "../constants";
 import { logoHorizontal } from "../assets";
-import { AlignJustify } from "lucide-react";
+import { AlignJustify, X } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { connect, address } = useStateContext();
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
 
   return (
     <div className="fixed top-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center z-10 p-[10px] gap-[20px]">
-        <AlignJustify
-          size={45}
-          color="#262626"
-          className="cursor-pointer dark:hidden xl:hidden"
-        />
-        <AlignJustify
-          size={45}
-          color="#e7e7e7"
-          className="hidden cursor-pointer dark:block dark:xl:hidden"
-        />
+        {!showMobileMenu && (
+          <>
+            <AlignJustify
+              size={45}
+              color="#262626"
+              className="z-50 cursor-pointer dark:hidden xl:hidden"
+              onClick={toggleMobileMenu}
+            />
+            <AlignJustify
+              size={45}
+              color="#e7e7e7"
+              className="z-50 hidden cursor-pointer dark:block xl:hidden"
+              onClick={toggleMobileMenu}
+            />
+          </>
+        )}
+        {showMobileMenu && (
+          <X
+            size={45}
+            color="#e7e7e7"
+            className="z-50  cursor-pointer dark:block xl:hidden"
+            onClick={toggleMobileMenu}
+          />
+        )}
+
         <Link
           to="/"
           className="hidden xl:block"
@@ -110,6 +129,10 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
+      <MobileNavbar
+        isOpen={showMobileMenu}
+        toggleNavbar={toggleMobileMenu}
+      />
     </div>
   );
 };

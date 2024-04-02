@@ -11,3 +11,4 @@ export { default as Loader } from './Loader';
 export { default as SearchCampaigns } from './SearchCampaigns';
 export { default as Footer } from './Footer';
 export { default as ErrorMessage } from './ErrorMessage';
+export { default as MobileNavbar } from './MobileNavbar';
